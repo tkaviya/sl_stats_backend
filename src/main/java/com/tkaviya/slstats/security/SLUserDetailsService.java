@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /***************************************************************************
  * Created:     01 / 11 / 2022                                             *
  * Platform:    Ubuntu Linux x86_64                                        *
@@ -24,18 +26,12 @@ public class SLUserDetailsService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         SLUser slUser = slUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not found with username: " + username));
 
         return SLUserDetailsImpl.build(slUser);
-
-//        if ("tkaviya".equals(username)) {
-//            return new User("tkaviya", "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6",
-//                    new ArrayList<>());
-//        } else {
-//            throw new UsernameNotFoundException("User not found with username: " + username);
-//        }
     }
 }
