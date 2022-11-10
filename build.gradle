@@ -1,0 +1,52 @@
+buildscript {
+
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+
+    dependencies {
+        classpath(group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.7.5')
+//        classpath(group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.3.12.RELEASE')
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.7.5'
+}
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.tkaviya.slstats'
+version = '1.0'
+
+description = 'Streamlabs Stats Backend'
+
+//jar { archivesBaseName = 'slstats' }
+
+sourceCompatibility = 17
+targetCompatibility = 17
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    implementation('org.springframework.boot:spring-boot-starter-validation')
+    implementation('mysql:mysql-connector-java')
+    implementation('io.jsonwebtoken:jjwt:0.9.1')
+//    implementation('jakarta.xml.bind:jakarta.xml.bind-api:4.0.0')
+//    implementation('org.glassfish.jaxb:jaxb-runtime:4.0.1')
+    implementation('javax.xml.bind:jaxb-api:2.3.1')
+}
